@@ -1,5 +1,6 @@
 from django.db import models
+from jsonfield import JSONField
 
 
 class Tags(models.Model):
-    tags_counter = models.TextField()
+    tag_counter = JSONField(null=True)

@@ -1,22 +1,33 @@
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.response import Response
-from rest_framework import status
-from .serializers import TagsSerializer, TagsRetrieveSerializer
+
 from .models import Tags
+from .serializers import TagsSerializer
 
 
 class TagsCreateView(CreateAPIView):
     serializer_class = TagsSerializer
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
 
 class TagsRetrieveView(RetrieveAPIView):
-    serializer_class = TagsRetrieveSerializer
     queryset = Tags.objects.all()
 
+    def get(self, request, *args, **kwargs):
+        tags = self.get_object().tag_counter
+
+        return Response(tags)
+
+
+class Json(TagsRetrieveView):
+    def get(self, request, *args, **kwargs):
+        tags = self.get_object().tag_counter
+
+        tags_list = []
+        for key, value in tags.items():
+            tag = {
+                "name": key,
+                "count": value
+            }
+            tags_list.append(tag)
+
+        return Response(tags_list)

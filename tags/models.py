@@ -1,3 +1,5 @@
 from django.db import models
 
-# Create your models here.
+
+class Tags(models.Model):
+    tags_counter = models.TextField()

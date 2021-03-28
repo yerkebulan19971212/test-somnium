@@ -18,7 +18,7 @@ class CeleryTagsCreateView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         tag = Tags.objects.create(tag_counter=None)
-        task = get_html_tags.delay(tag.pk, request.data.get('url'))
+        task = get_html_tags.delay(tag.pk, serializer.validated_data.get('url'))
         return Response(
             {"pk": tag.pk, 'task_id': task.id, 'task_status': task.status},
             status=status.HTTP_201_CREATED

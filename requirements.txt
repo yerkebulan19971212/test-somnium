@@ -9,3 +9,7 @@ bs4~=0.0.1
 beautifulsoup4~=4.9.3
 djangorestframework~=3.12.2
 jsonfield
+Celery
+redis
+Pillow
+django-widget-tweaks

@@ -23,3 +23,11 @@ class TagsSerializer(serializers.ModelSerializer):
         instance = self.Meta.model.objects.create(tag_counter=dict(counter))
 
         return instance
+
+
+class TagsCelerySerializer(serializers.ModelSerializer):
+    url = serializers.URLField(write_only=True)
+
+    class Meta:
+        model = Tags
+        fields = ('pk', 'url', )

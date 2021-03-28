@@ -3,4 +3,4 @@ from jsonfield import JSONField
 
 
 class Tags(models.Model):
-    tag_counter = JSONField(null=True)
+    tag_counter = JSONField(null=True, blank=True)
